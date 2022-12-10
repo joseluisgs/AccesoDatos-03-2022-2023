@@ -1,0 +1,72 @@
+package db
+
+import model.Tenista
+import java.time.LocalDate
+
+fun getTenistasInit() = listOf(
+    Tenista(
+        nombre = "Rafael Nadal",
+        ranking = 2,
+        fechaNacimiento = LocalDate.parse("1985-06-04"),
+        añoProfesional = 2005,
+        altura = 185,
+        peso = 80,
+        ganancias = 10000000.0,
+        manoDominante = Tenista.ManoDominante.from("Izquierda"),
+        tipoReves = Tenista.TipoReves.from("dos manos"),
+        puntos = 6789,
+        pais = "España",
+    ),
+    Tenista(
+        nombre = "Carlos Alcaraz",
+        ranking = 1,
+        fechaNacimiento = LocalDate.parse("2003-05-05"),
+        añoProfesional = 2005,
+        altura = 185,
+        peso = 80,
+        ganancias = 5000000.0,
+        manoDominante = Tenista.ManoDominante.from("Derecha"),
+        tipoReves = Tenista.TipoReves.from("dos manos"),
+        puntos = 6880,
+        pais = "España",
+    ),
+    Tenista(
+        nombre = "Roger Federer",
+        ranking = 3,
+        fechaNacimiento = LocalDate.parse("1981-01-01"),
+        añoProfesional = 2000,
+        altura = 188,
+        peso = 83,
+        ganancias = 20000000.0,
+        manoDominante = Tenista.ManoDominante.from("Derecha"),
+        tipoReves = Tenista.TipoReves.from("una mano"),
+        puntos = 3789,
+        pais = "Suiza",
+    ),
+    Tenista(
+        nombre = "Novak Djokovic",
+        ranking = 4,
+        fechaNacimiento = LocalDate.parse("1985-06-04"),
+        añoProfesional = 2003,
+        altura = 189,
+        peso = 81,
+        ganancias = 10000000.0,
+        manoDominante = Tenista.ManoDominante.from("Derecha"),
+        tipoReves = Tenista.TipoReves.from("dos manos"),
+        puntos = 1970,
+        pais = "Serbia",
+    ),
+    Tenista(
+        nombre = "Dominic Thiem",
+        ranking = 5,
+        fechaNacimiento = LocalDate.parse("1985-06-04"),
+        añoProfesional = 2005,
+        altura = 188,
+        peso = 82,
+        ganancias = 10000.0,
+        manoDominante = Tenista.ManoDominante.from("Derecha"),
+        tipoReves = Tenista.TipoReves.from("una mano"),
+        puntos = 1234,
+        pais = "Austria",
+    )
+)

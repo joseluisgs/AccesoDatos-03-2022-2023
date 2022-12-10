@@ -1,0 +1,89 @@
+-- src/main/sqldelight/database/AppDatabase.sq
+
+-- Cuuidado con las ñ que no las quiere
+
+-- Tables & Entities
+CREATE TABLE Raqueta (
+    id INTEGER PRIMARY KEY,
+    marca TEXT NOT NULL,
+    precio REAL NOT NULL
+);
+
+CREATE TABLE Tenista (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT NOT NULL,
+    ranking INTEGER NOT NULL,
+    fecha_nacimiento TEXT NOT NULL,
+    anno_profesional INTEGER NOT NULL,
+    altura INTEGER NOT NULL,
+    peso INTEGER NOT NULL,
+    ganancias REAL NOT NULL,
+    mano_dominante TEXT NOT NULL,
+    tipo_reves TEXT NOT NULL,
+    puntos INTEGER NOT NULL,
+    pais TEXT NOT NULL,
+    raqueta_id INTEGER,
+    FOREIGN KEY(raqueta_id) REFERENCES Raqueta(id)
+);
+
+-- CRUD operations for Raqueta Entity
+
+removeAllRaquetas:
+DELETE FROM Raqueta;
+
+selectAllRaquetas:
+SELECT * FROM Raqueta;
+
+selectRaquetaById:
+SELECT * FROM Raqueta WHERE id = ?;
+
+selectRaquetaByMarca:
+SELECT * FROM Raqueta WHERE marca = ?;
+
+selectLastRaqueta:
+SELECT * FROM Raqueta ORDER BY id DESC LIMIT 1;
+
+insertIntoRaqueta:
+INSERT INTO Raqueta (marca, precio) VALUES (?, ?);
+
+insertRaqueta:
+INSERT INTO Raqueta (id, marca, precio) VALUES (?, ?, ?);
+
+updateRaqueta:
+UPDATE Raqueta SET marca = ?, precio = ? WHERE id = ?;
+
+deleteRaquetaById:
+DELETE FROM Raqueta WHERE id = ?;
+
+-- CRUD operations for Tenista Entity
+
+removeAllTenistas:
+DELETE FROM Tenista;
+
+selectAllTenistas:
+SELECT * FROM Tenista;
+
+selectTenistaById:
+SELECT * FROM Tenista WHERE id = ?;
+
+selectTenistaByNombre:
+SELECT * FROM Tenista WHERE nombre = ?;
+
+selectLastTenista:
+SELECT * FROM Tenista ORDER BY id DESC LIMIT 1;
+
+insertIntoTenista:
+INSERT INTO Tenista (nombre, ranking, fecha_nacimiento, anno_profesional, altura, peso, ganancias, mano_dominante, tipo_reves, puntos, pais, raqueta_id)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+insertTenista:
+INSERT INTO Tenista (id, nombre, ranking, fecha_nacimiento, anno_profesional, altura, peso, ganancias, mano_dominante, tipo_reves, puntos, pais, raqueta_id)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateTenista:
+UPDATE Tenista SET nombre = ?, ranking = ?, fecha_nacimiento = ?, anno_profesional = ?, altura = ?, peso = ?, ganancias = ?, mano_dominante = ?, tipo_reves = ?, puntos = ?, pais = ?, raqueta_id = ? WHERE id = ?;
+
+deleteTenistaById:
+DELETE FROM Tenista WHERE id = ?;
+
+

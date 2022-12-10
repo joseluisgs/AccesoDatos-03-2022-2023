@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
+    // Para que funcione Hibernate con JPA en Kotlin, ya que es un framework de Java
+    // Hay que indicar que queremos que las clases de Kotlin sean abiertas por defecto
+    // Para que Hibernate pueda extenderlas
+    id 'org.jetbrains.kotlin.plugin.allopen' version '1.6.20'
+    // Para que data class se conviertan en entidades de JPA si no tiene argumentos
+    // y no trabajar con nulos
+    id 'org.jetbrains.kotlin.plugin.noarg' version '1.6.20'
+}
+
+group 'es.joseluisgs'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.0'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+[compileKotlin, compileTestKotlin].forEach {
+    it.kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+// Serán abiertas todas las clases de Kotlin que estén anotadas como:
+allOpen {
+    annotation('javax.persistence.Entity')
+    annotation('javax.persistence.Embeddable')
+    annotation('javax.persistence.MappedSuperclass')
+}
+
+// Se tendrá en cuenta la anotación en las clases anotadas como:
+noArg {
+    annotation('javax.persistence.Entity')
+    annotation('javax.persistence.Embeddable')
+    annotation('javax.persistence.MappedSuperclass')
+}
+
+dependencies {
+    // Hibernate con JPA
+    implementation('org.hibernate:hibernate-core:5.6.14.Final')
+
+    // Base de Datos H2 Driver JDBC
+    implementation("com.h2database:h2:2.1.214")
+
+    // Para hacer el logging
+    implementation('io.github.microutils:kotlin-logging-jvm:3.0.3')
+    implementation('ch.qos.logback:logback-classic:1.4.4')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    // Si queremos usar Mokk para test, es mokito para Kotlin
+    implementation("io.mockk:mockk:1.13.2")
+}
+
+test {
+    useJUnitPlatform()
+}

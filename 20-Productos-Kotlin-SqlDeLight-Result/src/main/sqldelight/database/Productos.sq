@@ -1,0 +1,46 @@
+-- Podructos Entity
+
+CREATE TABLE IF NOT EXISTS ProductoEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uuid TEXT NOT NULL,
+    nombre TEXT NOT NULL,
+    precio REAL NOT NULL,
+    cantidad INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    disponible INTEGER NOT NULL
+);
+
+-- Operaciones CRUD
+
+removeAll:
+DELETE FROM ProductoEntity;
+
+selectAll:
+SELECT * FROM ProductoEntity;
+
+selectById:
+SELECT * FROM ProductoEntity WHERE id = ?;
+
+selectByUuid:
+SELECT * FROM ProductoEntity WHERE uuid = ?;
+
+-- De esta manera podremos hacerlo sin transacciones
+-- selectLastInserted:
+-- SELECT * FROM ProductoEntity ORDER BY id DESC LIMIT 1;
+
+-- selectLastInserted:
+-- SELECT * FROM ProductoEntity WHERE id = (SELECT MAX(id) FROM ProductoEntity);
+
+-- De esta manera podremos hacerlo con transacciones usando la función last_insert_rowid() de SQLite
+selectLastInserted:
+SELECT * FROM ProductoEntity WHERE id = last_insert_rowid();
+
+insert:
+INSERT INTO ProductoEntity (uuid, nombre, cantidad, precio, created_at, updated_at, disponible) VALUES (?, ?, ?, ?, ?, ?, ?);
+
+update:
+UPDATE ProductoEntity SET nombre = ?, cantidad = ?, precio =?, updated_at = ?, disponible = ? WHERE id = ?;
+
+delete:
+DELETE FROM ProductoEntity WHERE id = ?;

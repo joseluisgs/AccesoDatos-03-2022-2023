@@ -1,0 +1,32 @@
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <!--  Nombre de la unidad de persistencia  -->
+    <persistence-unit name="default">
+        <description>Ejemplo Mutua Madrid Hibernate JPA</description>
+        <!--   Indicamos el “provider” que es la implementación de JPA que estamos usando.
+               En nuestro ejemplo hibernate, pero existen otros proveedores como EclipseLink:   -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- indicamos las clases a ser mapeadas por JPA -->
+        <class>models.Raqueta</class>
+        <class>models.Tenista</class>
+
+        <!--   Indicamos las propiedades de configuración de la implementación de JPA que estamos usando -->
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:h2:mem:tenistas-test;DB_CLOSE_DELAY=-1;"/>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
+            <property name="hibernate.connection.user" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
+            <!--   Para ver las consultas   -->
+            <property name="hibernate.show_sql" value="true"/>
+            <!--   Para trabajar con el esquema
+                                        validate: validate the schema, makes no changes to the database.
+                                        update: update the schema si detecta cambios.
+                                        create: creates the schema, destroying previous data.
+                                        create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
+                                        none: does nothing with the schema, makes no changes to the database  -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>

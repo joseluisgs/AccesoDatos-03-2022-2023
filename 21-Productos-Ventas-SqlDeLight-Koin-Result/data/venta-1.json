@@ -1,0 +1,22 @@
+{
+  "id": 1,
+  "userId": 1,
+  "lineas": [
+    {
+      "ventaId": 1,
+      "lineaId": 1,
+      "productoId": 2,
+      "cantidad": 2,
+      "productoPrecio": 20.0
+    },
+    {
+      "ventaId": 1,
+      "lineaId": 2,
+      "productoId": 3,
+      "cantidad": 1,
+      "productoPrecio": 10.0
+    }
+  ],
+  "createdAt": "2023-04-04T17:40:36",
+  "updatedAt": "2023-04-04T17:40:36"
+}

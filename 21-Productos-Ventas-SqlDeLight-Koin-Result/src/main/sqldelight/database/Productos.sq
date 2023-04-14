@@ -1,0 +1,151 @@
+-- Podructos Entity
+
+-- DROP TABLE IF EXISTS Linea_VentaEntity;
+-- DROP TABLE IF EXISTS ProductoEntity;
+-- DROP TABLE IF EXISTS VentaEntity;
+
+-- Tabla de Productos
+CREATE TABLE IF NOT EXISTS ProductoEntity
+(
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre     TEXT    NOT NULL,
+    precio     REAL    NOT NULL,
+    cantidad   INTEGER NOT NULL,
+    created_at TEXT    NOT NULL,
+    updated_at TEXT    NOT NULL,
+    disponible INTEGER NOT NULL
+);
+
+-- insertamos datos iniciales
+INSERT INTO ProductoEntity (id, nombre, precio, cantidad, created_at, updated_at, disponible)
+VALUES (1, 'Producto 1', 10.0, 10, '2023-04-04T17:40:36', '2023-04-03T17:40:36',
+        1);
+INSERT INTO ProductoEntity (id, nombre, precio, cantidad, created_at, updated_at, disponible)
+VALUES (2, 'Producto 2', 20.0, 20, '2023-04-04T17:40:36', '2023-04-03T17:40:36',
+        0);
+INSERT INTO ProductoEntity (id, nombre, precio, cantidad, created_at, updated_at, disponible)
+VALUES (3, 'Producto 3', 10.0, 10, '2023-04-04T17:40:36', '2023-04-03T17:40:36',
+        1);
+
+-- Operaciones CRUD
+removeAllProductos:
+DELETE FROM ProductoEntity;
+
+selectAllProductos:
+SELECT * FROM ProductoEntity;
+
+selectProductoById:
+SELECT * FROM ProductoEntity WHERE id = ?;
+
+selectAllProductosByDisponible:
+SELECT * FROM ProductoEntity WHERE disponible = ?;
+
+-- De esta manera podremos hacerlo sin transacciones
+-- selectLastInserted:
+-- SELECT * FROM ProductoEntity ORDER BY id DESC LIMIT 1;
+
+-- selectLastInserted:
+-- SELECT * FROM ProductoEntity WHERE id = (SELECT MAX(id) FROM ProductoEntity);
+
+-- De esta manera podremos hacerlo con transacciones usando la función last_insert_rowid() de SQLite
+selectProductoLastInserted:
+SELECT * FROM ProductoEntity WHERE id = last_insert_rowid();
+
+insertProducto:
+INSERT INTO ProductoEntity (nombre, cantidad, precio, created_at, updated_at, disponible) VALUES (?, ?, ?, ?, ?, ?);
+
+updateProducto:
+UPDATE ProductoEntity SET nombre = ?, cantidad = ?, precio =?, updated_at = ?, disponible = ? WHERE id = ?;
+
+deleteProducto:
+DELETE FROM ProductoEntity WHERE id = ?;
+
+-- Tabla de ventas
+CREATE TABLE IF NOT EXISTS VentaEntity
+(
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id      INTEGER NOT NULL,
+    created_at   TEXT    NOT NULL,
+    updated_at   TEXT    NOT NULL,
+    total_precio REAL    NOT NULL,
+    total_items  INTEGER NOT NULL
+);
+
+-- insertamos datos iniciales
+INSERT INTO VentaEntity (id, user_id, created_at, updated_at, total_precio, total_items)
+VALUES (1, 1, '2023-04-04T17:40:36', '2023-04-04T17:40:36', 50.0, 3);
+
+-- Operaciones CRUD
+removeAllVentas:
+DELETE FROM VentaEntity;
+
+selectAllVentas:
+SELECT * FROM VentaEntity;
+
+selectVentaById:
+SELECT * FROM VentaEntity WHERE id = ?;
+
+-- De esta manera podremos hacerlo sin transacciones
+-- selectLastInserted:
+-- SELECT * FROM Ventas ORDER BY id DESC LIMIT 1;
+
+-- selectLastInserted:
+-- SELECT * FROM Ventas WHERE id = (SELECT MAX(id) FROM Ventas);
+
+-- De esta manera podremos hacerlo con transacciones usando la función last_insert_rowid() de SQLite
+selectVentaLastInserted:
+SELECT * FROM VentaEntity WHERE id = last_insert_rowid();
+
+insertVenta:
+INSERT INTO VentaEntity (user_id, created_at, updated_at, total_precio, total_items) VALUES (?, ?, ?, ?, ?);
+
+updateVenta:
+UPDATE VentaEntity SET user_id = ?, updated_at = ?, total_precio = ?, total_items = ? WHERE id = ?;
+
+deleteVenta:
+DELETE FROM VentaEntity WHERE id = ?;
+
+-- Tabla de Lineas de Ventas.
+CREATE TABLE IF NOT EXISTS Linea_VentaEntity
+(
+    venta_id        INTEGER NOT NULL REFERENCES VentaEntity (id) ON DELETE CASCADE,
+    linea_id        INTEGER NOT NULL,
+    producto_id     INTEGER NOT NULL REFERENCES ProductoEntity (id),
+    cantidad        INTEGER NOT NULL,
+    producto_precio REAL    NOT NULL,
+    total_precio    REAL    NOT NULL,
+    PRIMARY KEY (venta_id, linea_id)
+);
+
+-- insertamos datos iniciales
+INSERT INTO Linea_VentaEntity (venta_id, linea_id, producto_id, cantidad, producto_precio, total_precio)
+VALUES (1, 1, 2, 2, 20.0, 40.0);
+INSERT INTO Linea_VentaEntity (venta_id, linea_id, producto_id, cantidad, producto_precio, total_precio)
+VALUES (1, 2, 3, 1, 10.0, 10.0);
+
+-- Operaciones CRUD
+removeAllLineasVentas:
+DELETE FROM Linea_VentaEntity;
+
+selectAllLineasVentas:
+SELECT * FROM Linea_VentaEntity;
+
+selectLineaVentaByVentaId:
+SELECT * FROM Linea_VentaEntity WHERE venta_id = ?;
+
+-- De esta manera podremos hacerlo sin transacciones
+-- selectLastInserted:
+-- SELECT * FROM Linea_VentaEntity ORDER BY venta_id DESC, linea_id DESC LIMIT 1;
+
+-- selectLastInserted:
+-- SELECT * FROM Linea_VentaEntity WHERE venta_id = (SELECT MAX(venta_id) FROM Linea_VentaEntity) AND linea_id = (SELECT MAX(linea_id) FROM Linea_VentaEntity);
+
+insertLineaVenta:
+INSERT INTO Linea_VentaEntity (venta_id, linea_id, producto_id, cantidad, producto_precio, total_precio) VALUES (?, ?, ?, ?, ?, ?);
+
+updateLineaVenta:
+UPDATE Linea_VentaEntity SET producto_id = ?, cantidad = ?, producto_precio = ?, total_precio = ? WHERE venta_id = ? AND linea_id = ?;
+
+deleteLineaVenta:
+DELETE FROM Linea_VentaEntity WHERE venta_id = ? AND linea_id = ?;
+

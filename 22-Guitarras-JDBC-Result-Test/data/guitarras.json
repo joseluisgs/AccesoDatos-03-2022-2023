@@ -1,0 +1,46 @@
+[
+    {
+        "id": 2,
+        "uuid": "f975c0ac-ca3b-4733-ad83-133b500d2c89",
+        "marca": "Gibson",
+        "modelo": "E-335",
+        "precio": 3250.0,
+        "stock": 5,
+        "createdAt": "2023-04-14T19:15:26.478380309",
+        "updatedAt": "2023-04-14T19:15:26.478380309",
+        "deleted": false
+    },
+    {
+        "id": 3,
+        "uuid": "7a8c95f7-a05b-4dd5-9471-08a0efc6e369",
+        "marca": "Fender",
+        "modelo": "Stratocaster",
+        "precio": 1890.0,
+        "stock": 15,
+        "createdAt": "2023-04-14T19:15:26.502176373",
+        "updatedAt": "2023-04-14T19:15:26.502176373",
+        "deleted": false
+    },
+    {
+        "id": 4,
+        "uuid": "223d7e81-210a-4b22-9f4b-58bcf09faf95",
+        "marca": "Fender",
+        "modelo": "Telecaster",
+        "precio": 1900.0,
+        "stock": 10,
+        "createdAt": "2023-04-14T19:15:26.524298165",
+        "updatedAt": "2023-04-14T19:15:26.524298165",
+        "deleted": false
+    },
+    {
+        "id": 5,
+        "uuid": "7f1f0122-7fe8-472b-abdb-22acb09e473a",
+        "marca": "Mi guitarra New",
+        "modelo": "Mi modelo New",
+        "precio": 1000.0,
+        "stock": 10,
+        "createdAt": "2023-04-14T19:15:26.621992850",
+        "updatedAt": "2023-04-14T19:15:26.621992850",
+        "deleted": false
+    }
+]
